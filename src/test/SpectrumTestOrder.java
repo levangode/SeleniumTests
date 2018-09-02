@@ -12,6 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 public class SpectrumTestOrder {
 
+    /* Set the driver path on your local computer */
+    private String chromeDriverPath = "C:\\Users\\Levan\\Desktop\\chromedriver_win32\\chromedriver.exe";
+
+
     private WebDriver driver;
     private String addressSelector = "input[id^=address1]";
     private String zipSelector = "input[id^=zip]";
@@ -33,7 +37,7 @@ public class SpectrumTestOrder {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Levan\\Desktop\\chromedriver_win32\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
