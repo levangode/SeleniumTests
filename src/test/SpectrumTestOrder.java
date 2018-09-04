@@ -1,3 +1,4 @@
+package test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -5,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,7 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class SpectrumTestOrder {
 
     /* Set the driver path on your local computer */
-    private String chromeDriverPath = "C:\\Users\\Levan\\Desktop\\chromedriver_win32\\chromedriver.exe";
+    private String chromeDriverPath = "lib\\chromedriver.exe";
+    private String fireFoxDriverPath = "lib\\geckodriver.exe";
 
 
     private WebDriver driver;
@@ -37,27 +40,37 @@ public class SpectrumTestOrder {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-        driver = new ChromeDriver();
+        /*System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+        driver = new ChromeDriver();*/
+        
+        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
+        driver = new FirefoxDriver();
+        
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
     public void testUntitledTestCase() throws Exception {
         driver.get("https://spectrum.com/");
+        driver.manage().window().maximize();
+        SeleniumUtils.captureScreenShot(driver);
+        
         /* Get offers for address/zip */
         driver.findElement(By.cssSelector(addressSelector)).sendKeys(address);
         driver.findElement(By.cssSelector(zipSelector)).sendKeys(zip);
+        SeleniumUtils.captureScreenShot(driver);
         driver.findElement(By.cssSelector(submitBtnSelector)).click();
 
         /* Wait until offers are loaded and click the first offer */
         WebDriverWait wait = new WebDriverWait(driver, 60);
         WebElement firstOffer = wait.until(
                 ExpectedConditions.elementToBeClickable(By.cssSelector(offerButtonSelector)));
+        SeleniumUtils.captureScreenShot(driver);
         firstOffer.click();
 
         /* Wait until offer detailed information is loaded and then click the Continue button */
         WebElement continueBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(contiuneBtnSelector)));
+        SeleniumUtils.captureScreenShot(driver);
         continueBtn.click();
 
         /* Wait until contact information is loaded and then fill in the information */
@@ -67,10 +80,11 @@ public class SpectrumTestOrder {
         driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
         driver.findElement(By.id(emailId)).sendKeys(emailInput);
         driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
+        SeleniumUtils.captureScreenShot(driver);
     }
 
     @After
     public void cleanUp() {
-//        driver.close();
+        driver.close();
     }
 }
