@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SpectrumTestOrder {
 
-    /* Set the driver path on your local computer */
-    private String chromeDriverPath = "C:\\Users\\Levan\\Desktop\\chromedriver_win32\\chromedriver.exe";
+    private String chromeDriverPath = "lib\\chromedriver.exe";
 
 
     private WebDriver driver;
