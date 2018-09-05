@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 
 public class SpectrumTestOrder {
 
+	private String testCaseName;
+	
     /* Set the driver path on your local computer */
     private String chromeDriverPath = "lib\\chromedriver.exe";
     private String fireFoxDriverPath = "lib\\geckodriver.exe";
@@ -47,30 +49,31 @@ public class SpectrumTestOrder {
         driver = new FirefoxDriver();
         
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        testCaseName = "TestCase_1_" + System.currentTimeMillis();
     }
 
     @Test
     public void testUntitledTestCase() throws Exception {
         driver.get("https://spectrum.com/");
         driver.manage().window().maximize();
-        SeleniumUtils.captureScreenShot(driver);
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
         
         /* Get offers for address/zip */
         driver.findElement(By.cssSelector(addressSelector)).sendKeys(address);
         driver.findElement(By.cssSelector(zipSelector)).sendKeys(zip);
-        SeleniumUtils.captureScreenShot(driver);
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
         driver.findElement(By.cssSelector(submitBtnSelector)).click();
 
         /* Wait until offers are loaded and click the first offer */
         WebDriverWait wait = new WebDriverWait(driver, 60);
         WebElement firstOffer = wait.until(
                 ExpectedConditions.elementToBeClickable(By.cssSelector(offerButtonSelector)));
-        SeleniumUtils.captureScreenShot(driver);
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
         firstOffer.click();
-
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
         /* Wait until offer detailed information is loaded and then click the Continue button */
         WebElement continueBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(contiuneBtnSelector)));
-        SeleniumUtils.captureScreenShot(driver);
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
         continueBtn.click();
 
         /* Wait until contact information is loaded and then fill in the information */
@@ -80,7 +83,7 @@ public class SpectrumTestOrder {
         driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
         driver.findElement(By.id(emailId)).sendKeys(emailInput);
         driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
-        SeleniumUtils.captureScreenShot(driver);
+        SeleniumUtils.captureScreenShot(driver, testCaseName);
     }
 
     @After
