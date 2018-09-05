@@ -49,14 +49,14 @@ public class SpectrumTestOrder {
 
     @Before
     public void setUp() throws Exception {
-        /*System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-        driver = new ChromeDriver();*/
-        
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+        driver = new ChromeDriver();
+
 //        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
 //        driver = new FirefoxDriver();
 //
-        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
-        driver = new ChromeDriver();
+//        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
+//        driver = new ChromeDriver();
         
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         testCaseName = "TestCase_1_" + new Date().toString();
