@@ -1,4 +1,4 @@
-package enums;
+package com.amind.enums;
 
 public enum OutcomeType {
     SUCCESS,

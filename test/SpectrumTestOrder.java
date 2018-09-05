@@ -1,4 +1,5 @@
-import enums.OutcomeType;
+
+import com.amind.enums.OutcomeType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -11,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.SeleniumUtils;
+import com.amind.utils.SeleniumUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
