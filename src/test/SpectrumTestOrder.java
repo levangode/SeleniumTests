@@ -1,4 +1,6 @@
-package test;
+import enums.OutcomeType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,16 +11,21 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.SeleniumUtils;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class SpectrumTestOrder {
 
+    Logger logger = LogManager.getLogger();
+
 	private String testCaseName;
 	
     /* Set the driver path on your local computer */
-    private String chromeDriverPath = "lib\\chromedriver.exe";
-    private String fireFoxDriverPath = "lib\\geckodriver.exe";
+    private String chromeDriverPath = "lib/chromedriver.exe";
+    private String chromeDriverPathLinux = "lib/chromedriver";
+    private String fireFoxDriverPath = "lib/geckodriver.exe";
 
 
     private WebDriver driver;
@@ -45,45 +52,56 @@ public class SpectrumTestOrder {
         /*System.setProperty("webdriver.chrome.driver", chromeDriverPath);
         driver = new ChromeDriver();*/
         
-        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
-        driver = new FirefoxDriver();
+//        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
+//        driver = new FirefoxDriver();
+//
+        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
+        driver = new ChromeDriver();
         
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        testCaseName = "TestCase_1_" + System.currentTimeMillis();
+        testCaseName = "TestCase_1_" + new Date().toString();
     }
 
     @Test
     public void testUntitledTestCase() throws Exception {
-        driver.get("https://spectrum.com/");
-        driver.manage().window().maximize();
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
-        
-        /* Get offers for address/zip */
-        driver.findElement(By.cssSelector(addressSelector)).sendKeys(address);
-        driver.findElement(By.cssSelector(zipSelector)).sendKeys(zip);
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
-        driver.findElement(By.cssSelector(submitBtnSelector)).click();
+        try {
+            logger.info("Launching Test Case 1");
+            driver.get("https://spectrum.com/");
+            driver.manage().window().maximize();
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
 
-        /* Wait until offers are loaded and click the first offer */
-        WebDriverWait wait = new WebDriverWait(driver, 60);
-        WebElement firstOffer = wait.until(
-                ExpectedConditions.elementToBeClickable(By.cssSelector(offerButtonSelector)));
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
-        firstOffer.click();
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
-        /* Wait until offer detailed information is loaded and then click the Continue button */
-        WebElement continueBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(contiuneBtnSelector)));
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
-        continueBtn.click();
+            /* Get offers for address/zip */
+            driver.findElement(By.cssSelector(addressSelector)).sendKeys(address);
+            driver.findElement(By.cssSelector(zipSelector)).sendKeys(zip);
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+            driver.findElement(By.cssSelector(submitBtnSelector)).click();
 
-        /* Wait until contact information is loaded and then fill in the information */
-        wait.until(ExpectedConditions.elementToBeClickable(By.id(firstNameId)));
-        driver.findElement(By.id(firstNameId)).sendKeys(firstNameInput);
-        driver.findElement(By.id(lastNameId)).sendKeys(lastNameInput);
-        driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
-        driver.findElement(By.id(emailId)).sendKeys(emailInput);
-        driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
-        SeleniumUtils.captureScreenShot(driver, testCaseName);
+            /* Wait until offers are loaded and click the first offer */
+            WebDriverWait wait = new WebDriverWait(driver, 60);
+            WebElement firstOffer = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.cssSelector(offerButtonSelector)));
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+            firstOffer.click();
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+            /* Wait until offer detailed information is loaded and then click the Continue button */
+            WebElement continueBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(contiuneBtnSelector)));
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+            continueBtn.click();
+
+            /* Wait until contact information is loaded and then fill in the information */
+            wait.until(ExpectedConditions.elementToBeClickable(By.id(firstNameId)));
+            driver.findElement(By.id(firstNameId)).sendKeys(firstNameInput);
+            driver.findElement(By.id(lastNameId)).sendKeys(lastNameInput);
+            driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
+            driver.findElement(By.id(emailId)).sendKeys(emailInput);
+            driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+            logger.info("Test Case 1 Completed Successfully");
+        } catch (Exception e){
+            logger.error("Test Case 1 Error");
+            logger.error(e.getMessage());
+            SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.FAIL);
+        }
     }
 
     @After
