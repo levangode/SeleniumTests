@@ -1,5 +1,7 @@
+package com.amind.tests;
 
 import com.amind.enums.OutcomeType;
+import com.amind.utils.SeleniumUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -9,17 +11,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.amind.utils.SeleniumUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class SpectrumTestOrder {
 
-    Logger logger = LogManager.getLogger();
+    private Logger logger = LogManager.getLogger();
 
 	private String testCaseName;
 	
@@ -47,17 +48,19 @@ public class SpectrumTestOrder {
     private String confirmEmailId = "confirm-email";
     private String emailInput = "levan.goderdzishvili@amindSolutions.com";
     private String confirmEmailInput = "levan.goderdzishvili@amindSolutions.com";
+    private String mobilePhoneTypeId= "phone-type-mobile-label";
+    private String overAYearOrUnder="over_a_year_over_1_year";
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-        driver = new ChromeDriver();
+//        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+//        driver = new ChromeDriver();
 
 //        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
 //        driver = new FirefoxDriver();
 //
-//        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
-//        driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
+        driver = new ChromeDriver();
         
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         testCaseName = "TestCase_1_" + new Date().toString();
@@ -96,6 +99,14 @@ public class SpectrumTestOrder {
             driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
             driver.findElement(By.id(emailId)).sendKeys(emailInput);
             driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
+            driver.findElement(By.id(mobilePhoneTypeId)).click();
+            driver.findElement(By.id(overAYearOrUnder)).click();
+            Select month = new Select(driver.findElement(By.name("selectedMonth")));
+            month.selectByValue("4");
+            Select date = new Select(driver.findElement(By.name("selectedDay")));
+            date.selectByValue("6");
+            Select year = new Select(driver.findElement(By.name("selectedYear")));
+            year.selectByValue("10");
             SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
             logger.info("Test Case 1 Completed Successfully");
         } catch (Exception e){
@@ -107,6 +118,6 @@ public class SpectrumTestOrder {
 
     @After
     public void cleanUp() {
-        driver.close();
+//        driver.close();
     }
 }

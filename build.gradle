@@ -10,15 +10,15 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.14.0'
 
     compile "org.codehaus.groovy:groovy-all:2.4.15"
-    testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+    compile "org.spockframework:spock-core:1.1-groovy-2.4"
 
     // optional dependencies for using Spock
-    testCompile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
-    testRuntime "net.bytebuddy:byte-buddy:1.6.5"          // allows mocking of classes (in addition to interfaces)
+    compile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
+    compile "net.bytebuddy:byte-buddy:1.6.5"          // allows mocking of classes (in addition to interfaces)
     
     // https://mvnrepository.com/artifact/commons-io/commons-io
 	compile group: 'commons-io', name: 'commons-io', version: '2.4'

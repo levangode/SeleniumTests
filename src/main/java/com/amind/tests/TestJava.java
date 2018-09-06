@@ -1,3 +1,4 @@
+package com.amind.tests;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
