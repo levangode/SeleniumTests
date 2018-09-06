@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class SpectrumTestOrder {
+public class SpectrumTestOrder_2 {
 
 	private Logger logger = LogManager.getLogger();
 
@@ -34,8 +34,9 @@ public class SpectrumTestOrder {
 	private String addressSelector = "input[id^=address1]";
 	private String zipSelector = "input[id^=zip]";
 	private String submitBtnSelector = "button[type=submit][data-linkname=\"View All Offers\"]";
-	private String address = "3824 Lindell Blvd";
-	private String zip = "63108";
+	private String address = "160 Riverside Blvd";
+	private String flt = "10f";
+	private String zip = "10069";
 	private String offerButtonSelector = "button[id^=choose_autoBundleOffer]";
 	private String contiuneBtnSelector = "#customize-your-order > section > section > div > div.ng-scope > div.ng-scope.ng-isolate-scope > div.col-md-4.hidden-xs.hidden-sm.ng-isolate-scope > div > aside > div > div.continueCartBtn.ng-scope > a[id^=continue_btn_side_cart][role=button]";
 	private String firstNameId = "firstname";
@@ -63,7 +64,7 @@ public class SpectrumTestOrder {
 		//driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		testCaseName = "TestCase_1_" + new Date().toString();
+		testCaseName = "TestCase_2_" + new Date().toString();
 	}
 
 	@Test
