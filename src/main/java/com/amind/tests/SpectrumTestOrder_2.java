@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -32,12 +33,14 @@ public class SpectrumTestOrder_2 {
 
 	private WebDriver driver;
 	private String addressSelector = "input[id^=address1]";
+	private String aptSelector = "input[id^=apt]";
 	private String zipSelector = "input[id^=zip]";
 	private String submitBtnSelector = "button[type=submit][data-linkname=\"View All Offers\"]";
 	private String address = "160 Riverside Blvd";
-	private String flt = "10f";
+	private String apt = "10f";
 	private String zip = "10069";
-	private String offerButtonSelector = "button[id^=choose_autoBundleOffer]";
+	//SPECIAL FEATURED OFFER
+	private String offerButtonSelector = ".col-md-2.bottom-controls.offer-button button[id^=choose_autoBundleOffer]";
 	private String contiuneBtnSelector = "#customize-your-order > section > section > div > div.ng-scope > div.ng-scope.ng-isolate-scope > div.col-md-4.hidden-xs.hidden-sm.ng-isolate-scope > div > aside > div > div.continueCartBtn.ng-scope > a[id^=continue_btn_side_cart][role=button]";
 	private String firstNameId = "firstname";
 	private String lastNameId = "lastname";
@@ -64,19 +67,20 @@ public class SpectrumTestOrder_2 {
 		//driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		testCaseName = "TestCase_2_" + new Date().toString();
+		testCaseName = "TestCase_2_" + new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
 	}
 
 	@Test
 	public void testUntitledTestCase() throws Exception {
 		try {
-			logger.info("Launching Test Case 1");
+			logger.info(testCaseName + " - Launching");
 			driver.get("https://spectrum.com/");
 			driver.manage().window().maximize();
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
 
 			/* Get offers for address/zip */
 			driver.findElement(By.cssSelector(addressSelector)).sendKeys(address);
+			driver.findElement(By.cssSelector(aptSelector)).sendKeys(apt);
 			driver.findElement(By.cssSelector(zipSelector)).sendKeys(zip);
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
 			driver.findElement(By.cssSelector(submitBtnSelector)).click();
@@ -87,6 +91,7 @@ public class SpectrumTestOrder_2 {
 					.until(ExpectedConditions.elementToBeClickable(By.cssSelector(offerButtonSelector)));
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
 			firstOffer.click();
+			
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
 			/*
 			 * Wait until offer detailed information is loaded and then click the Continue
@@ -99,6 +104,8 @@ public class SpectrumTestOrder_2 {
 
 			/* Wait until contact information is loaded and then fill in the information */
 			wait.until(ExpectedConditions.elementToBeClickable(By.id(firstNameId)));
+			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
+			
 			driver.findElement(By.id(firstNameId)).sendKeys(firstNameInput);
 			driver.findElement(By.id(lastNameId)).sendKeys(lastNameInput);
 			driver.findElement(By.id(phoneNumberId)).sendKeys(phoneNumberInput);
@@ -113,9 +120,9 @@ public class SpectrumTestOrder_2 {
 			Select year = new Select(driver.findElement(By.name("selectedYear")));
 			year.selectByValue("10");
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
-			logger.info("Test Case 1 Completed Successfully");
+			logger.info(testCaseName + " - Completed Successfully");
 		} catch (Exception e) {
-			logger.error("Test Case 1 Error");
+			logger.error(testCaseName + " - Error");
 			logger.error(e.getMessage());
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.FAIL);
 		}
@@ -123,6 +130,6 @@ public class SpectrumTestOrder_2 {
 
 	@After
 	public void cleanUp() {
-		// driver.close();
+		driver.close();
 	}
 }
