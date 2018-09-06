@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -59,17 +60,19 @@ public class SpectrumTestOrder {
 		System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
 		driver = new FirefoxDriver();
 
+		//
 		// System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
-		//driver = new ChromeDriver();
+		// driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		testCaseName = "TestCase_1_" + new Date().toString();
+		testCaseName = "TestCase_1_" + new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
+
 	}
 
 	@Test
 	public void testUntitledTestCase() throws Exception {
 		try {
-			logger.info("Launching Test Case 1");
+			logger.info(testCaseName + " - Launching");
 			driver.get("https://spectrum.com/");
 			driver.manage().window().maximize();
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
@@ -112,9 +115,9 @@ public class SpectrumTestOrder {
 			Select year = new Select(driver.findElement(By.name("selectedYear")));
 			year.selectByValue("10");
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.SUCCESS);
-			logger.info("Test Case 1 Completed Successfully");
+			logger.info(testCaseName + " - Completed Successfully");
 		} catch (Exception e) {
-			logger.error("Test Case 1 Error");
+			logger.error(testCaseName + " - Error");
 			logger.error(e.getMessage());
 			SeleniumUtils.captureScreenShotWithAshotLibrary(driver, testCaseName, OutcomeType.FAIL);
 		}
@@ -122,6 +125,6 @@ public class SpectrumTestOrder {
 
 	@After
 	public void cleanUp() {
-		// driver.close();
+		driver.close();
 	}
 }
