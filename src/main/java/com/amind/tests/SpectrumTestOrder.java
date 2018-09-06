@@ -11,10 +11,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -56,14 +58,14 @@ public class SpectrumTestOrder {
 //        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 //        driver = new ChromeDriver();
 
-//        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
-//        driver = new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
+        driver = new FirefoxDriver();
 //
-        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
-        driver = new ChromeDriver();
+//        System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
+//        driver = new ChromeDriver();
         
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        testCaseName = "TestCase_1_" + new Date().toString();
+        testCaseName = "TestCase_1_"+new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
     }
 
     @Test
