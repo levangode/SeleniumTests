@@ -44,13 +44,13 @@ public class SpectrumTestOrder {
 	private String phoneNumberId = "phoneNumber";
 	private String firstNameInput = "Levan";
 	private String lastNameInput = "Goderdzishvili";
-	private String phoneNumberInput = "593252073";
+	private String phoneNumberInput = "995593252073";
 	private String emailId = "email";
 	private String confirmEmailId = "confirm-email";
 	private String emailInput = "levan.goderdzishvili@amindSolutions.com";
 	private String confirmEmailInput = "levan.goderdzishvili@amindSolutions.com";
 	private String mobilePhoneTypeId = "phone-type-mobile-label";
-	private String overAYearOrUnder = "over_a_year_over_1_year";
+	private String overAYearOrUnder = "over_a_year_under_1_year";
 
 	@Before
 	public void setUp() throws Exception {
@@ -60,9 +60,9 @@ public class SpectrumTestOrder {
 		System.setProperty("webdriver.gecko.driver", fireFoxDriverPath);
 		driver = new FirefoxDriver();
 
-		//
-		// System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
-		// driver = new ChromeDriver();
+//
+//		 System.setProperty("webdriver.chrome.driver", chromeDriverPathLinux);
+//		 driver = new ChromeDriver();
 
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		testCaseName = "TestCase_1_" + new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
@@ -108,6 +108,13 @@ public class SpectrumTestOrder {
 			driver.findElement(By.id(confirmEmailId)).sendKeys(confirmEmailInput);
 			driver.findElement(By.id(mobilePhoneTypeId)).click();
 			driver.findElement(By.id(overAYearOrUnder)).click();
+			driver.findElement(By.id("previousAddress")).sendKeys("Lindell Blvd");
+			driver.findElement(By.id("previousAddressApartment")).sendKeys("3824");
+			driver.findElement(By.id("previousAddressCity")).sendKeys("St. Louis");
+			driver.findElement(By.id("terms_agree")).click();
+			Select previousState =  new Select(driver.findElement(By.id("previousAddressState")));
+			previousState.selectByValue("GA");
+			driver.findElement(By.id("previousAddressZipCode")).sendKeys("63108");
 			Select month = new Select(driver.findElement(By.name("selectedMonth")));
 			month.selectByValue("4");
 			Select date = new Select(driver.findElement(By.name("selectedDay")));
